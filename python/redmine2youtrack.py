@@ -79,6 +79,9 @@ def main():
 
 def to_unixtime(time_string):
     tz_diff = 0
+    time_string = time_string.replace('U', '')
+    time_string = time_string.replace('T', ' ')
+    time_string = time_string.replace('C', '')
     if len(time_string) == 10:
         dt = datetime.strptime(time_string, '%Y-%m-%d')
     else:
@@ -91,7 +94,7 @@ def to_unixtime(time_string):
                 if tzm[1] == '-':
                     tz_diff = -tz_diff
         dt = datetime.strptime(
-            time_string.replace('T', ' '), '%Y-%m-%d %H:%M:%S')
+            time_string.strip(), '%Y-%m-%d %H:%M:%S')
     return (calendar.timegm(dt.timetuple()) + tz_diff) * 1000
 
 
